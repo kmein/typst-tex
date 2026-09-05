@@ -290,6 +290,8 @@ src/notes.typ      footnotes and display skips
 tools/             the pixel-diff harness
 tests/             per-feature documents and their LaTeX twins
 examples/tea/      23 pages about tea (see above, and reconsider your life)
+flake.nix          packaging, plus the comparison suite as a flake check
+.github/workflows  the same comparison, monthly, forever
 ```
 
 Requires Typst 0.14+, and for the harness a TeX installation plus `pdftoppm`,
