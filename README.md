@@ -182,6 +182,28 @@ successfully.
 Geometry is not a table of magic numbers; `src/geometry.typ` runs LaTeX's own
 algorithm, so every paper/size combination it supports works.
 
+### Nix
+
+```bash
+nix run   github:kmein/typst-tex#typst -- compile --root . mydoc.typ
+nix build github:kmein/typst-tex#tea      # the 23 pages about tea
+nix develop                               # both engines, rasteriser, pixel differ
+nix flake check                           # see below
+```
+
+`packages.typst` is a Typst wrapper with this package importable as
+`@preview/latex-article:0.1.0` and Latin Modern already on the font path, so it
+works in a sandbox with no system fonts:
+
+```typst
+#import "@preview/latex-article:0.1.0": article
+```
+
+`nix flake check` compiles fifteen documents twice — once in Typst, once in
+pdfTeX — rasterises thirty PDFs at 300 DPI and compares them pixel by pixel. It
+is, I am reasonably confident, the most rigorous continuous integration ever
+built for a problem nobody has.
+
 ---
 
 ## Things I could not fix and have made peace with
