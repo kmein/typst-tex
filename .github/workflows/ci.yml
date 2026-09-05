@@ -1,0 +1,59 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+  # The whole premise of this repository is that the output has not moved. A
+  # monthly run catches the day a Typst release changes its line breaker, or
+  # nixpkgs bumps Latin Modern, before anyone else has to notice.
+  schedule:
+    - cron: "0 6 1 * *"
+
+permissions:
+  contents: read
+
+jobs:
+  compare:
+    name: Diff against pdflatex
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: cachix/install-nix-action@v30
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+
+      # Compiles fifteen documents through both pdfTeX and Typst, rasterises
+      # thirty PDFs at 300 DPI, and compares them pixel by pixel.
+      - name: Compare against pdflatex
+        run: nix build .#checks.x86_64-linux.comparison -L --out-link result-check
+
+      - name: Publish the pixel diff
+        if: always()
+        run: |
+          if [ -f result-check/report ]; then
+            {
+              echo '## Pixel diff against pdflatex'
+              echo
+              echo '```'
+              cat result-check/report
+              echo '```'
+            } >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Build the worked example
+        run: |
+          nix build .#tea -L --out-link result-tea
+          install -Dm644 result-tea/share/doc/latex-article/tea.pdf artifacts/tea.pdf
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: tea-pdf
+          path: artifacts/tea.pdf
+          if-no-files-found: error
+
+      - name: Evaluate every flake output
+        run: nix flake check -L

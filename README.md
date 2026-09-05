@@ -1,4 +1,6 @@
-# latex-article
+# typst-tex
+
+[![CI](https://github.com/kmein/typst-tex/actions/workflows/ci.yml/badge.svg)](https://github.com/kmein/typst-tex/actions/workflows/ci.yml)
 
 **Typst was created, in part, so that people would not have to use LaTeX.**
 
@@ -14,6 +16,9 @@ This repository uses Typst to *be* LaTeX. On purpose. To within 0.05 points.
 Output is `\documentclass[a4paper]{article}`. Not "inspired by". Not "in the
 spirit of". The two PDFs are diffed pixel by pixel and the residual is
 antialiasing.
+
+(The repository is `typst-tex`; the package inside it is `latex-article`, which
+is the name you import. Yes, this is already confusing. It does not get better.)
 
 ---
 
@@ -293,6 +298,9 @@ ImageMagick and `mutool`.
 ---
 
 ## FAQ
+
+**Why is the repo called `typst-tex` and the package `latex-article`?**
+The repository is the crime scene. The package is the evidence.
 
 **Why?**
 Because `\@settopoint` is integer truncation and somebody had to say so.
