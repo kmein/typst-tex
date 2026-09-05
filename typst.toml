@@ -1,0 +1,7 @@
+[package]
+name = "latex-article"
+version = "0.1.0"
+entrypoint = "src/lib.typ"
+authors = ["Kieran Meinhardt"]
+license = "MIT"
+description = "A metrically exact rendering of LaTeX's article class in Typst."

@@ -1,0 +1,14 @@
+#import "../src/lib.typ": article
+#show: article.with(paper: "a4", size: "10")
+
+A paragraph with a footnote attached to it,#footnote[The first footnote, which
+is long enough to wrap onto a second line inside the footnote area.] followed
+by more running text to fill out the line.
+
+A second paragraph with another note.#footnote[A short second footnote.]
+
+Text before a displayed equation, long enough to occupy a full line of the
+paragraph so the spacing above the display is measured properly.
+$ a^2 + b^2 = c^2 $
+Text after the displayed equation, also long enough to run to a second line
+of the paragraph body.
